@@ -1,0 +1,9 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="jumbotron">
+    <h1>Wybory prezydenckie</h1>
+    <p class="lead">Witamy w wyborach prezydenckich. Coś tam coś tam. Jakiś tekst Jeżeli chcesz głosować, kliknij w przycisk na dole</p>
+    <p>@Html.ActionLink("Głosuj >>", "LoginView", "Home", null, new { @class= "btn btn-primary btn-lg;"}) </p>
+</div>
