@@ -1,0 +1,298 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="electDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Candidates">
+          <Key>
+            <PropertyRef Name="CandidateID" />
+          </Key>
+          <Property Name="CandidateID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LastName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="FirstName" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="PoliticalGroup" Type="int" />
+        </EntityType>
+        <EntityType Name="Citizens">
+          <Key>
+            <PropertyRef Name="PersonID" />
+          </Key>
+          <Property Name="PersonID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LastName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="FirstName" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Address" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="City" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="PESEL" Type="int" Nullable="false" />
+          <Property Name="IdNumber" Type="varchar" MaxLength="9" Nullable="false" />
+          <Property Name="TokenID" Type="int" />
+        </EntityType>
+        <EntityType Name="PoliticalGroups">
+          <Key>
+            <PropertyRef Name="GroupID" />
+          </Key>
+          <Property Name="GroupID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="GroupName" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Tokens">
+          <Key>
+            <PropertyRef Name="TokenID" />
+          </Key>
+          <Property Name="TokenID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Token" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="IsUsed" Type="bit" Nullable="false" />
+          <Property Name="VoteData" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Vote">
+          <Key>
+            <PropertyRef Name="VoteID" />
+          </Key>
+          <Property Name="VoteID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CandidateID" Type="int" />
+        </EntityType>
+        <Association Name="FK__Candidate__Polit__2C3393D0">
+          <End Role="PoliticalGroups" Type="Self.PoliticalGroups" Multiplicity="0..1" />
+          <End Role="Candidates" Type="Self.Candidates" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PoliticalGroups">
+              <PropertyRef Name="GroupID" />
+            </Principal>
+            <Dependent Role="Candidates">
+              <PropertyRef Name="PoliticalGroup" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Citizens__TokenI__276EDEB3">
+          <End Role="Tokens" Type="Self.Tokens" Multiplicity="0..1" />
+          <End Role="Citizens" Type="Self.Citizens" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tokens">
+              <PropertyRef Name="TokenID" />
+            </Principal>
+            <Dependent Role="Citizens">
+              <PropertyRef Name="TokenID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Vote__CandidateI__2F10007B">
+          <End Role="Candidates" Type="Self.Candidates" Multiplicity="0..1" />
+          <End Role="Vote" Type="Self.Vote" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Candidates">
+              <PropertyRef Name="CandidateID" />
+            </Principal>
+            <Dependent Role="Vote">
+              <PropertyRef Name="CandidateID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="electDBModelStoreContainer">
+          <EntitySet Name="Candidates" EntityType="Self.Candidates" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Citizens" EntityType="Self.Citizens" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PoliticalGroups" EntityType="Self.PoliticalGroups" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tokens" EntityType="Self.Tokens" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Vote" EntityType="Self.Vote" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Candidate__Polit__2C3393D0" Association="Self.FK__Candidate__Polit__2C3393D0">
+            <End Role="PoliticalGroups" EntitySet="PoliticalGroups" />
+            <End Role="Candidates" EntitySet="Candidates" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Citizens__TokenI__276EDEB3" Association="Self.FK__Citizens__TokenI__276EDEB3">
+            <End Role="Tokens" EntitySet="Tokens" />
+            <End Role="Citizens" EntitySet="Citizens" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Vote__CandidateI__2F10007B" Association="Self.FK__Vote__CandidateI__2F10007B">
+            <End Role="Candidates" EntitySet="Candidates" />
+            <End Role="Vote" EntitySet="Vote" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="electDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Candidate">
+          <Key>
+            <PropertyRef Name="CandidateID" />
+          </Key>
+          <Property Name="CandidateID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="FirstName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PoliticalGroup" Type="Int32" />
+          <NavigationProperty Name="PoliticalGroup1" Relationship="Self.FK__Candidate__Polit__2C3393D0" FromRole="Candidates" ToRole="PoliticalGroups" />
+          <NavigationProperty Name="Votes" Relationship="Self.FK__Vote__CandidateI__2F10007B" FromRole="Candidates" ToRole="Vote" />
+        </EntityType>
+        <EntityType Name="Citizen">
+          <Key>
+            <PropertyRef Name="PersonID" />
+          </Key>
+          <Property Name="PersonID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="FirstName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Address" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PESEL" Type="Int32" Nullable="false" />
+          <Property Name="IdNumber" Type="String" MaxLength="9" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="TokenID" Type="Int32" />
+          <NavigationProperty Name="Token" Relationship="Self.FK__Citizens__TokenI__276EDEB3" FromRole="Citizens" ToRole="Tokens" />
+        </EntityType>
+        <EntityType Name="PoliticalGroup">
+          <Key>
+            <PropertyRef Name="GroupID" />
+          </Key>
+          <Property Name="GroupID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="GroupName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Candidates" Relationship="Self.FK__Candidate__Polit__2C3393D0" FromRole="PoliticalGroups" ToRole="Candidates" />
+        </EntityType>
+        <EntityType Name="Token">
+          <Key>
+            <PropertyRef Name="TokenID" />
+          </Key>
+          <Property Name="TokenID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Token1" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="IsUsed" Type="Boolean" Nullable="false" />
+          <Property Name="VoteData" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Citizens" Relationship="Self.FK__Citizens__TokenI__276EDEB3" FromRole="Tokens" ToRole="Citizens" />
+        </EntityType>
+        <EntityType Name="Vote">
+          <Key>
+            <PropertyRef Name="VoteID" />
+          </Key>
+          <Property Name="VoteID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CandidateID" Type="Int32" />
+          <NavigationProperty Name="Candidate" Relationship="Self.FK__Vote__CandidateI__2F10007B" FromRole="Vote" ToRole="Candidates" />
+        </EntityType>
+        <Association Name="FK__Candidate__Polit__2C3393D0">
+          <End Role="PoliticalGroups" Type="Self.PoliticalGroup" Multiplicity="0..1" />
+          <End Role="Candidates" Type="Self.Candidate" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PoliticalGroups">
+              <PropertyRef Name="GroupID" />
+            </Principal>
+            <Dependent Role="Candidates">
+              <PropertyRef Name="PoliticalGroup" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Vote__CandidateI__2F10007B">
+          <End Role="Candidates" Type="Self.Candidate" Multiplicity="0..1" />
+          <End Role="Vote" Type="Self.Vote" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Candidates">
+              <PropertyRef Name="CandidateID" />
+            </Principal>
+            <Dependent Role="Vote">
+              <PropertyRef Name="CandidateID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Citizens__TokenI__276EDEB3">
+          <End Role="Tokens" Type="Self.Token" Multiplicity="0..1" />
+          <End Role="Citizens" Type="Self.Citizen" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tokens">
+              <PropertyRef Name="TokenID" />
+            </Principal>
+            <Dependent Role="Citizens">
+              <PropertyRef Name="TokenID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ElectionEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Candidates" EntityType="Self.Candidate" />
+          <EntitySet Name="Citizens" EntityType="Self.Citizen" />
+          <EntitySet Name="PoliticalGroups" EntityType="Self.PoliticalGroup" />
+          <EntitySet Name="Tokens" EntityType="Self.Token" />
+          <EntitySet Name="Votes" EntityType="Self.Vote" />
+          <AssociationSet Name="FK__Candidate__Polit__2C3393D0" Association="Self.FK__Candidate__Polit__2C3393D0">
+            <End Role="PoliticalGroups" EntitySet="PoliticalGroups" />
+            <End Role="Candidates" EntitySet="Candidates" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Vote__CandidateI__2F10007B" Association="Self.FK__Vote__CandidateI__2F10007B">
+            <End Role="Candidates" EntitySet="Candidates" />
+            <End Role="Vote" EntitySet="Votes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Citizens__TokenI__276EDEB3" Association="Self.FK__Citizens__TokenI__276EDEB3">
+            <End Role="Tokens" EntitySet="Tokens" />
+            <End Role="Citizens" EntitySet="Citizens" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="electDBModelStoreContainer" CdmEntityContainer="ElectionEntities">
+          <EntitySetMapping Name="Candidates">
+            <EntityTypeMapping TypeName="electDBModel.Candidate">
+              <MappingFragment StoreEntitySet="Candidates">
+                <ScalarProperty Name="CandidateID" ColumnName="CandidateID" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="PoliticalGroup" ColumnName="PoliticalGroup" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Citizens">
+            <EntityTypeMapping TypeName="electDBModel.Citizen">
+              <MappingFragment StoreEntitySet="Citizens">
+                <ScalarProperty Name="PersonID" ColumnName="PersonID" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="PESEL" ColumnName="PESEL" />
+                <ScalarProperty Name="IdNumber" ColumnName="IdNumber" />
+                <ScalarProperty Name="TokenID" ColumnName="TokenID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PoliticalGroups">
+            <EntityTypeMapping TypeName="electDBModel.PoliticalGroup">
+              <MappingFragment StoreEntitySet="PoliticalGroups">
+                <ScalarProperty Name="GroupID" ColumnName="GroupID" />
+                <ScalarProperty Name="GroupName" ColumnName="GroupName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tokens">
+            <EntityTypeMapping TypeName="electDBModel.Token">
+              <MappingFragment StoreEntitySet="Tokens">
+                <ScalarProperty Name="TokenID" ColumnName="TokenID" />
+                <ScalarProperty Name="Token1" ColumnName="Token" />
+                <ScalarProperty Name="IsUsed" ColumnName="IsUsed" />
+                <ScalarProperty Name="VoteData" ColumnName="VoteData" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Votes">
+            <EntityTypeMapping TypeName="electDBModel.Vote">
+              <MappingFragment StoreEntitySet="Vote">
+                <ScalarProperty Name="VoteID" ColumnName="VoteID" />
+                <ScalarProperty Name="CandidateID" ColumnName="CandidateID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

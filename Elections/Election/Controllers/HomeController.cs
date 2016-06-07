@@ -9,10 +9,10 @@ namespace Election.Controllers
 {
     public class HomeController : Controller
     {
-        private masterEntities db = new masterEntities();
+        private ElectionEntities db = new ElectionEntities();
+        private ElectionLogic logic = new ElectionLogic();
         public ActionResult Index()
         {
-            
             return View();
         }
 
@@ -21,10 +21,21 @@ namespace Election.Controllers
             return View();
         }
 
-        public ActionResult TokenView()
+        public ActionResult TokenView(Citizen citizen)
         {
-            return View();
+            var tokenId = logic.CheckCitizenData(citizen);
+            if (tokenId > 0)
+            {
+                // tutaj trzeba jakos przekazac dalej tokenID zeby go mozna bylo pozniej sprawdzic z tym co ktos wpisal
+                // nie pisalem nigdy nic w MVC wiec nie wiem jak to sie przesyla. Jakos do querystringa najlepiej pewnie
+                // moge to zrobic asynchronicznie przez javasript i ajaxem ale to duzo przerabiania
+                return View();
+            }
+
+            //info ze nie ma danych
+            else return HttpNotFound();
         }
+        
         public ActionResult VoteView()
         {
             return View(db.Candidates.ToList());

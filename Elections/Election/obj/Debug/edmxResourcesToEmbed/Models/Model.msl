@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="electDBModelStoreContainer" CdmEntityContainer="ElectionEntities">
+    <EntitySetMapping Name="Candidates">
+      <EntityTypeMapping TypeName="electDBModel.Candidate">
+        <MappingFragment StoreEntitySet="Candidates">
+          <ScalarProperty Name="CandidateID" ColumnName="CandidateID" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="PoliticalGroup" ColumnName="PoliticalGroup" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Citizens">
+      <EntityTypeMapping TypeName="electDBModel.Citizen">
+        <MappingFragment StoreEntitySet="Citizens">
+          <ScalarProperty Name="PersonID" ColumnName="PersonID" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="City" ColumnName="City" />
+          <ScalarProperty Name="PESEL" ColumnName="PESEL" />
+          <ScalarProperty Name="IdNumber" ColumnName="IdNumber" />
+          <ScalarProperty Name="TokenID" ColumnName="TokenID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PoliticalGroups">
+      <EntityTypeMapping TypeName="electDBModel.PoliticalGroup">
+        <MappingFragment StoreEntitySet="PoliticalGroups">
+          <ScalarProperty Name="GroupID" ColumnName="GroupID" />
+          <ScalarProperty Name="GroupName" ColumnName="GroupName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Tokens">
+      <EntityTypeMapping TypeName="electDBModel.Token">
+        <MappingFragment StoreEntitySet="Tokens">
+          <ScalarProperty Name="TokenID" ColumnName="TokenID" />
+          <ScalarProperty Name="Token1" ColumnName="Token" />
+          <ScalarProperty Name="IsUsed" ColumnName="IsUsed" />
+          <ScalarProperty Name="VoteData" ColumnName="VoteData" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Votes">
+      <EntityTypeMapping TypeName="electDBModel.Vote">
+        <MappingFragment StoreEntitySet="Vote">
+          <ScalarProperty Name="VoteID" ColumnName="VoteID" />
+          <ScalarProperty Name="CandidateID" ColumnName="CandidateID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>
