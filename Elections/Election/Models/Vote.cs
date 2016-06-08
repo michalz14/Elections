@@ -17,6 +17,6 @@ namespace Election.Models
         public int VoteID { get; set; }
         public Nullable<int> CandidateID { get; set; }
     
-        public virtual Candidate Candidate { get; set; }
+        public virtual Candidates Candidates { get; set; }
     }
 }

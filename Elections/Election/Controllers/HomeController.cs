@@ -13,6 +13,7 @@ namespace Election.Controllers
         private ElectionLogic logic = new ElectionLogic();
         public ActionResult Index()
         {
+            //logic.GenerateTokens();  // metoda odpalająca generowanie i wstrzykiwanie tokenow do bazy
             return View();
         }
 
@@ -21,7 +22,7 @@ namespace Election.Controllers
             return View();
         }
 
-        public ActionResult TokenView(Citizen citizen)
+        public ActionResult TokenView(Citizens citizen)
         {
             var tokenId = logic.CheckCitizenData(citizen);
             if (tokenId > 0)

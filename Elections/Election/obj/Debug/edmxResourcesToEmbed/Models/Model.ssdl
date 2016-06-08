@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Schema Namespace="electDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+<Schema Namespace="electDB2Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
   <EntityType Name="Candidates">
     <Key>
       <PropertyRef Name="CandidateID" />
@@ -18,7 +18,7 @@
     <Property Name="FirstName" Type="varchar" MaxLength="100" Nullable="false" />
     <Property Name="Address" Type="varchar" MaxLength="100" Nullable="false" />
     <Property Name="City" Type="varchar" MaxLength="50" Nullable="false" />
-    <Property Name="PESEL" Type="int" Nullable="false" />
+    <Property Name="PESEL" Type="bigint" Nullable="false" />
     <Property Name="IdNumber" Type="varchar" MaxLength="9" Nullable="false" />
     <Property Name="TokenID" Type="int" />
   </EntityType>
@@ -34,9 +34,9 @@
       <PropertyRef Name="TokenID" />
     </Key>
     <Property Name="TokenID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Token" Type="varchar" MaxLength="25" Nullable="false" />
     <Property Name="IsUsed" Type="bit" Nullable="false" />
-    <Property Name="VoteData" Type="datetime" Nullable="false" />
+    <Property Name="VoteData" Type="datetime" />
+    <Property Name="Token" Type="varchar" MaxLength="100" Nullable="false" />
   </EntityType>
   <EntityType Name="Vote">
     <Key>
@@ -45,7 +45,7 @@
     <Property Name="VoteID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="CandidateID" Type="int" />
   </EntityType>
-  <Association Name="FK__Candidate__Polit__2C3393D0">
+  <Association Name="FK__Candidate__Polit__1920BF5C">
     <End Role="PoliticalGroups" Type="Self.PoliticalGroups" Multiplicity="0..1" />
     <End Role="Candidates" Type="Self.Candidates" Multiplicity="*" />
     <ReferentialConstraint>
@@ -57,7 +57,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Citizens__TokenI__276EDEB3">
+  <Association Name="FK__Citizens__TokenI__145C0A3F">
     <End Role="Tokens" Type="Self.Tokens" Multiplicity="0..1" />
     <End Role="Citizens" Type="Self.Citizens" Multiplicity="*" />
     <ReferentialConstraint>
@@ -69,7 +69,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Vote__CandidateI__2F10007B">
+  <Association Name="FK__Vote__CandidateI__1BFD2C07">
     <End Role="Candidates" Type="Self.Candidates" Multiplicity="0..1" />
     <End Role="Vote" Type="Self.Vote" Multiplicity="*" />
     <ReferentialConstraint>
@@ -81,21 +81,21 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <EntityContainer Name="electDBModelStoreContainer">
+  <EntityContainer Name="electDB2ModelStoreContainer">
     <EntitySet Name="Candidates" EntityType="Self.Candidates" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Citizens" EntityType="Self.Citizens" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="PoliticalGroups" EntityType="Self.PoliticalGroups" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Tokens" EntityType="Self.Tokens" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Vote" EntityType="Self.Vote" Schema="dbo" store:Type="Tables" />
-    <AssociationSet Name="FK__Candidate__Polit__2C3393D0" Association="Self.FK__Candidate__Polit__2C3393D0">
+    <AssociationSet Name="FK__Candidate__Polit__1920BF5C" Association="Self.FK__Candidate__Polit__1920BF5C">
       <End Role="PoliticalGroups" EntitySet="PoliticalGroups" />
       <End Role="Candidates" EntitySet="Candidates" />
     </AssociationSet>
-    <AssociationSet Name="FK__Citizens__TokenI__276EDEB3" Association="Self.FK__Citizens__TokenI__276EDEB3">
+    <AssociationSet Name="FK__Citizens__TokenI__145C0A3F" Association="Self.FK__Citizens__TokenI__145C0A3F">
       <End Role="Tokens" EntitySet="Tokens" />
       <End Role="Citizens" EntitySet="Citizens" />
     </AssociationSet>
-    <AssociationSet Name="FK__Vote__CandidateI__2F10007B" Association="Self.FK__Vote__CandidateI__2F10007B">
+    <AssociationSet Name="FK__Vote__CandidateI__1BFD2C07" Association="Self.FK__Vote__CandidateI__1BFD2C07">
       <End Role="Candidates" EntitySet="Candidates" />
       <End Role="Vote" EntitySet="Vote" />
     </AssociationSet>

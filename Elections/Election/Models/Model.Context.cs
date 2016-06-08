@@ -16,7 +16,7 @@ namespace Election.Models
     public partial class ElectionEntities : DbContext
     {
         public ElectionEntities()
-            : base("name=ElectionEntities")
+            : base("name=electDB2Entities")
         {
         }
     
@@ -25,10 +25,10 @@ namespace Election.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Candidate> Candidates { get; set; }
-        public virtual DbSet<Citizen> Citizens { get; set; }
-        public virtual DbSet<PoliticalGroup> PoliticalGroups { get; set; }
-        public virtual DbSet<Token> Tokens { get; set; }
-        public virtual DbSet<Vote> Votes { get; set; }
+        public virtual DbSet<Candidates> Candidates { get; set; }
+        public virtual DbSet<Citizens> Citizens { get; set; }
+        public virtual DbSet<PoliticalGroups> PoliticalGroups { get; set; }
+        public virtual DbSet<Tokens> Tokens { get; set; }
+        public virtual DbSet<Vote> Vote { get; set; }
     }
 }

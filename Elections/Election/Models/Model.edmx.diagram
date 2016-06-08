@@ -4,15 +4,15 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="c35ca8abcbe14960a58b18929c1527f3" Name="Diagram1">
-        <EntityTypeShape EntityType="electDBModel.Candidate" Width="1.5" PointX="3" PointY="0.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="electDBModel.Citizen" Width="1.5" PointX="3" PointY="5" IsExpanded="true" />
-        <EntityTypeShape EntityType="electDBModel.PoliticalGroup" Width="1.5" PointX="0.75" PointY="1.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="electDBModel.Token" Width="1.5" PointX="0.75" PointY="5.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="electDBModel.Vote" Width="1.5" PointX="5.25" PointY="1.25" IsExpanded="true" />
-        <AssociationConnector Association="electDBModel.FK__Candidate__Polit__2C3393D0" ManuallyRouted="false" />
-        <AssociationConnector Association="electDBModel.FK__Vote__CandidateI__2F10007B" ManuallyRouted="false" />
-        <AssociationConnector Association="electDBModel.FK__Citizens__TokenI__276EDEB3" ManuallyRouted="false" />
+      <Diagram DiagramId="d9fafc73cc7b4093b2365c659d849b30" Name="Diagram1">
+        <EntityTypeShape EntityType="electDB2Model.Candidates" Width="1.5" PointX="3" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="electDB2Model.Citizens" Width="1.5" PointX="3" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="electDB2Model.PoliticalGroups" Width="1.5" PointX="0.75" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="electDB2Model.Tokens" Width="1.5" PointX="0.75" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="electDB2Model.Vote" Width="1.5" PointX="5.25" PointY="1.25" IsExpanded="true" />
+        <AssociationConnector Association="electDB2Model.FK__Candidate__Polit__1920BF5C" ManuallyRouted="false" />
+        <AssociationConnector Association="electDB2Model.FK__Vote__CandidateI__1BFD2C07" ManuallyRouted="false" />
+        <AssociationConnector Association="electDB2Model.FK__Citizens__TokenI__145C0A3F" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

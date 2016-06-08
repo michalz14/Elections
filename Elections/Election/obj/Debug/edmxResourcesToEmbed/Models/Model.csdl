@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Schema Namespace="electDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-  <EntityType Name="Candidate">
+<Schema Namespace="electDB2Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Candidates">
     <Key>
       <PropertyRef Name="CandidateID" />
     </Key>
@@ -8,10 +8,10 @@
     <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="FirstName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="PoliticalGroup" Type="Int32" />
-    <NavigationProperty Name="PoliticalGroup1" Relationship="Self.FK__Candidate__Polit__2C3393D0" FromRole="Candidates" ToRole="PoliticalGroups" />
-    <NavigationProperty Name="Votes" Relationship="Self.FK__Vote__CandidateI__2F10007B" FromRole="Candidates" ToRole="Vote" />
+    <NavigationProperty Name="PoliticalGroups" Relationship="Self.FK__Candidate__Polit__1920BF5C" FromRole="Candidates" ToRole="PoliticalGroups" />
+    <NavigationProperty Name="Vote" Relationship="Self.FK__Vote__CandidateI__1BFD2C07" FromRole="Candidates" ToRole="Vote" />
   </EntityType>
-  <EntityType Name="Citizen">
+  <EntityType Name="Citizens">
     <Key>
       <PropertyRef Name="PersonID" />
     </Key>
@@ -20,28 +20,28 @@
     <Property Name="FirstName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="Address" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="PESEL" Type="Int32" Nullable="false" />
+    <Property Name="PESEL" Type="Int64" Nullable="false" />
     <Property Name="IdNumber" Type="String" MaxLength="9" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="TokenID" Type="Int32" />
-    <NavigationProperty Name="Token" Relationship="Self.FK__Citizens__TokenI__276EDEB3" FromRole="Citizens" ToRole="Tokens" />
+    <NavigationProperty Name="Tokens" Relationship="Self.FK__Citizens__TokenI__145C0A3F" FromRole="Citizens" ToRole="Tokens" />
   </EntityType>
-  <EntityType Name="PoliticalGroup">
+  <EntityType Name="PoliticalGroups">
     <Key>
       <PropertyRef Name="GroupID" />
     </Key>
     <Property Name="GroupID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="GroupName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-    <NavigationProperty Name="Candidates" Relationship="Self.FK__Candidate__Polit__2C3393D0" FromRole="PoliticalGroups" ToRole="Candidates" />
+    <NavigationProperty Name="Candidates" Relationship="Self.FK__Candidate__Polit__1920BF5C" FromRole="PoliticalGroups" ToRole="Candidates" />
   </EntityType>
-  <EntityType Name="Token">
+  <EntityType Name="Tokens">
     <Key>
       <PropertyRef Name="TokenID" />
     </Key>
     <Property Name="TokenID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="Token1" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="IsUsed" Type="Boolean" Nullable="false" />
-    <Property Name="VoteData" Type="DateTime" Nullable="false" Precision="3" />
-    <NavigationProperty Name="Citizens" Relationship="Self.FK__Citizens__TokenI__276EDEB3" FromRole="Tokens" ToRole="Citizens" />
+    <Property Name="VoteData" Type="DateTime" Precision="3" />
+    <Property Name="Token" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Citizens" Relationship="Self.FK__Citizens__TokenI__145C0A3F" FromRole="Tokens" ToRole="Citizens" />
   </EntityType>
   <EntityType Name="Vote">
     <Key>
@@ -49,11 +49,11 @@
     </Key>
     <Property Name="VoteID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="CandidateID" Type="Int32" />
-    <NavigationProperty Name="Candidate" Relationship="Self.FK__Vote__CandidateI__2F10007B" FromRole="Vote" ToRole="Candidates" />
+    <NavigationProperty Name="Candidates" Relationship="Self.FK__Vote__CandidateI__1BFD2C07" FromRole="Vote" ToRole="Candidates" />
   </EntityType>
-  <Association Name="FK__Candidate__Polit__2C3393D0">
-    <End Role="PoliticalGroups" Type="Self.PoliticalGroup" Multiplicity="0..1" />
-    <End Role="Candidates" Type="Self.Candidate" Multiplicity="*" />
+  <Association Name="FK__Candidate__Polit__1920BF5C">
+    <End Role="PoliticalGroups" Type="Self.PoliticalGroups" Multiplicity="0..1" />
+    <End Role="Candidates" Type="Self.Candidates" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="PoliticalGroups">
         <PropertyRef Name="GroupID" />
@@ -63,8 +63,8 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Vote__CandidateI__2F10007B">
-    <End Role="Candidates" Type="Self.Candidate" Multiplicity="0..1" />
+  <Association Name="FK__Vote__CandidateI__1BFD2C07">
+    <End Role="Candidates" Type="Self.Candidates" Multiplicity="0..1" />
     <End Role="Vote" Type="Self.Vote" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Candidates">
@@ -75,9 +75,9 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Citizens__TokenI__276EDEB3">
-    <End Role="Tokens" Type="Self.Token" Multiplicity="0..1" />
-    <End Role="Citizens" Type="Self.Citizen" Multiplicity="*" />
+  <Association Name="FK__Citizens__TokenI__145C0A3F">
+    <End Role="Tokens" Type="Self.Tokens" Multiplicity="0..1" />
+    <End Role="Citizens" Type="Self.Citizens" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Tokens">
         <PropertyRef Name="TokenID" />
@@ -87,21 +87,21 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <EntityContainer Name="ElectionEntities" annotation:LazyLoadingEnabled="true">
-    <EntitySet Name="Candidates" EntityType="Self.Candidate" />
-    <EntitySet Name="Citizens" EntityType="Self.Citizen" />
-    <EntitySet Name="PoliticalGroups" EntityType="Self.PoliticalGroup" />
-    <EntitySet Name="Tokens" EntityType="Self.Token" />
-    <EntitySet Name="Votes" EntityType="Self.Vote" />
-    <AssociationSet Name="FK__Candidate__Polit__2C3393D0" Association="Self.FK__Candidate__Polit__2C3393D0">
+  <EntityContainer Name="electDB2Entities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Candidates" EntityType="Self.Candidates" />
+    <EntitySet Name="Citizens" EntityType="Self.Citizens" />
+    <EntitySet Name="PoliticalGroups" EntityType="Self.PoliticalGroups" />
+    <EntitySet Name="Tokens" EntityType="Self.Tokens" />
+    <EntitySet Name="Vote" EntityType="Self.Vote" />
+    <AssociationSet Name="FK__Candidate__Polit__1920BF5C" Association="Self.FK__Candidate__Polit__1920BF5C">
       <End Role="PoliticalGroups" EntitySet="PoliticalGroups" />
       <End Role="Candidates" EntitySet="Candidates" />
     </AssociationSet>
-    <AssociationSet Name="FK__Vote__CandidateI__2F10007B" Association="Self.FK__Vote__CandidateI__2F10007B">
+    <AssociationSet Name="FK__Vote__CandidateI__1BFD2C07" Association="Self.FK__Vote__CandidateI__1BFD2C07">
       <End Role="Candidates" EntitySet="Candidates" />
-      <End Role="Vote" EntitySet="Votes" />
+      <End Role="Vote" EntitySet="Vote" />
     </AssociationSet>
-    <AssociationSet Name="FK__Citizens__TokenI__276EDEB3" Association="Self.FK__Citizens__TokenI__276EDEB3">
+    <AssociationSet Name="FK__Citizens__TokenI__145C0A3F" Association="Self.FK__Citizens__TokenI__145C0A3F">
       <End Role="Tokens" EntitySet="Tokens" />
       <End Role="Citizens" EntitySet="Citizens" />
     </AssociationSet>

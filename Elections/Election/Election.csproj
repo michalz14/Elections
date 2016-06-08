@@ -162,10 +162,10 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\Candidate.cs">
+    <Compile Include="Models\Candidates.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Citizen.cs">
+    <Compile Include="Models\Citizens.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ElectionLogic.cs" />
@@ -184,10 +184,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Model.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Models\PoliticalGroup.cs">
+    <Compile Include="Models\PoliticalGroups.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Token.cs">
+    <Compile Include="Models\Tokens.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Vote.cs">

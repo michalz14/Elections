@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Web;
 using Microsoft.Ajax.Utilities;
+using System.Security.Cryptography;
 
 namespace Election.Models
 {
@@ -13,7 +14,33 @@ namespace Election.Models
         {
         }
 
-        public int CheckCitizenData(Citizen citizen)
+        public void UseToken(string t)
+        {
+            using (ElectionEntities db = new ElectionEntities())
+            {
+                string tokenHash = Hash(t);
+                var token = db.Tokens.FirstOrDefault(x => x.Token == tokenHash);
+
+                if (token != null)
+                {
+                    token.IsUsed = true;
+                    token.VoteData = DateTime.Now;
+
+                    db.SaveChanges();
+                }
+            }
+        }
+
+        public void SaveVote(int candidateID)
+        {
+            using (ElectionEntities db = new ElectionEntities())
+            {
+                if(candidateID > 0)
+                    db.Vote.Add(new Vote {CandidateID = candidateID});
+            }
+        }
+
+        public int CheckCitizenData(Citizens citizen)
         {
             using (ElectionEntities db = new ElectionEntities())
             {
@@ -39,14 +66,18 @@ namespace Election.Models
             Enumerable.Range('a', 'z' - 'a' + 1).ToList().ForEach(x => chars.Add((char)x));
             Enumerable.Range(49, 9).ToList().ForEach(x => chars.Add((char)x));
 
-            for (int i = 0; i < 100000; i++) //liczba obywateli
+
+            using (ElectionEntities db = new ElectionEntities())
             {
-                CreateToken(chars);
+                while(db.Citizens.Any(x => x.TokenID == null))
+                {
+                    string token = CreateToken(chars);
+                    SaveToken(token);
+                }
             }
-            
         }
 
-        private void CreateToken(List<char> chars)
+        private string CreateToken(List<char> chars)
         {
             StringBuilder sb = new StringBuilder();
             Random r = new Random();
@@ -55,26 +86,43 @@ namespace Election.Models
                 sb.Append(chars[r.Next(chars.Count)]);
             }
 
-            SaveToken(sb.ToString());
+            return Hash(sb.ToString());
+            //return sb.ToString();
         }
 
         private void SaveToken(string token)
         {
             using(ElectionEntities db = new ElectionEntities())
             {
-                if (db.Tokens.Any(x=> x.Token1 == token))
+                if (!db.Tokens.Any(x=> x.Token == token))
                 {
-                    Token t = new Token();
-                    t.Token1 = token;
+                    Tokens t = new Tokens();
+                    t.Token = token;
                     t.IsUsed = false;
 
                     db.Tokens.Add(t);
+                    db.SaveChanges();
+
                     var citizen = db.Citizens.First(x => x.TokenID == null);
-                    citizen.TokenID = t.TokenID;
+
+                    if(citizen != null)
+                        citizen.TokenID = t.TokenID;
 
                     db.SaveChanges();
                 }
             }
+        }
+
+        private string Hash(string token) //funkcja hashujaca SHA
+        {
+            SHA256Managed crypt = new SHA256Managed();
+            StringBuilder hash = new StringBuilder();
+            byte[] crypto = crypt.ComputeHash(Encoding.UTF8.GetBytes(token));
+            foreach (byte theByte in crypto)
+            {
+                hash.Append(theByte.ToString("x2"));
+            }
+            return hash.ToString();
         }
 
     }
