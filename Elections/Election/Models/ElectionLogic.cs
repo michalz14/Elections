@@ -19,7 +19,7 @@ namespace Election.Models
             using (ElectionEntities db = new ElectionEntities())
             {
                 string tokenHash = Hash(t);
-                var token = db.Tokens.FirstOrDefault(x => x.Token == tokenHash);
+                var token = db.Tokens.FirstOrDefault(x => x.Token == tokenHash && x.IsUsed == false);
 
                 if (token != null)
                 {
@@ -27,6 +27,10 @@ namespace Election.Models
                     token.VoteData = DateTime.Now;
 
                     db.SaveChanges();
+                }
+                else
+                {
+                    //zwrot info że token jest już użyty lub podano nieprawidłowy
                 }
             }
         }
