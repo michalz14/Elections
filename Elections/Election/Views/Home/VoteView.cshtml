@@ -1,31 +1,35 @@
-﻿@model  IEnumerable<Election.Models.Candidate>
+﻿@model  Election.Models.VoteViewDTO
 
 <div class="row">
     <div class="col-md-8">
         <section id="loginForm">
-            @using (Html.BeginForm("ThanksPage", "Home", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-            {
-                @Html.AntiForgeryToken()
-                <h4>Zagłosuj na swojego kandydata.</h4>
-                <hr />
-                foreach (var candidate in Model)
-                {
-                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                    <div class="form-group">
-                        @Html.RadioButtonFor(m => candidate.FirstName, new { @class = "form-control" })
+            <div class="form-group">
+             @using (Html.BeginForm("ThanksPage", "Home", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+             {
+                    @Html.AntiForgeryToken()
+                    @Html.HiddenFor(x => x.TokenId);
+
+                    <h4>Zagłosuj na swojego kandydata.</h4>
+                            <hr />
+                    foreach (var candidate in Model.candidatesDTOlist)
+                    {
+                        //@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div>
+                        @Html.RadioButtonFor(m => Model.CandidateId,candidate.CandidateID)
                         @Html.DisplayFor(m => candidate.FirstName)
                         @Html.DisplayFor(m => candidate.LastName)
-                        @Html.DisplayFor(m => candidate.PoliticalGroup1.GroupName)
-                        
+                        @Html.DisplayFor(m => candidate.PoliticalGroups.GroupName)                    
                     </div>
-                }
+                    }
 
-                <div class="form-group">
+
                     <div class="col-md-offset-2 col-md-10">
                         <input type="submit" value="Zagłosuj" class="btn btn-default" />
+                        @Html.ActionLink("Powrót", "Index", "Home", new { @class = "btn btn-info" })
                     </div>
-                </div>
-            }
+             }
+             </div>
+           
         </section>
     </div>
 </div>

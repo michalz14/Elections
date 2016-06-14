@@ -39,8 +39,9 @@ namespace Election.Models
         {
             using (ElectionEntities db = new ElectionEntities())
             {
-                if(candidateID > 0)
+                if(candidateID >0)
                     db.Vote.Add(new Vote {CandidateID = candidateID});
+                db.SaveChanges();
             }
         }
 

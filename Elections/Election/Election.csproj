@@ -165,6 +165,7 @@
     <Compile Include="Models\Candidates.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\CandidatesDTO.cs" />
     <Compile Include="Models\Citizens.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
@@ -193,6 +194,7 @@
     <Compile Include="Models\Vote.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\VoteViewDTO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -254,6 +256,7 @@
     <Content Include="Views\Home\TokenView.cshtml" />
     <Content Include="Views\Home\VoteView.cshtml" />
     <Content Include="Views\Home\ThanksPage.cshtml" />
+    <Content Include="Views\Home\InvalidTokenView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

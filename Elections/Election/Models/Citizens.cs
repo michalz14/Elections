@@ -21,7 +21,7 @@ namespace Election.Models
         public string City { get; set; }
         public long PESEL { get; set; }
         public string IdNumber { get; set; }
-        public Nullable<int> TokenID { get; set; }
+        public int TokenID { get; set; }
     
         public virtual Tokens Tokens { get; set; }
     }
